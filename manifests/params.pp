@@ -9,8 +9,6 @@ class icinga::params {
   $icinga_name              = 'icinga2'
   $features_avail_path      = '/etc/icinga2/features-available'
   $features_enabled_path    = '/etc/icinga2/features-enabled'
-  $with_repo                = true
-  $icinga_bin               = '/usr/sbin/icinga2'
   $initdb                   = false
   $dbclient                 = {
     'mysql' => '/usr/bin/mysql',
@@ -21,4 +19,27 @@ class icinga::params {
   $with_backend             = true
   $with_classicui           = false
   $with_webgui              = false
+
+  case $::operatingsystem {
+    'RedHat': {
+      $with_repo  = true
+      $icinga_bin = '/usr/sbin/icinga2'
+    }
+    'CentOS': {
+      $with_repo = true
+      $icinga_bin = '/usr/sbin/icinga2'
+    }
+    'ScientificLinux': {
+      $with_repo = true
+      $icinga_bin = '/usr/sbin/icinga2'
+    }
+    'Ubuntu': {
+      $with_repo = true
+      $icinga_bin = '/usr/sbin/icinga2'
+    }
+    'OpenBSD': {
+      $with_repo = false
+      $icinga_bin = '/usr/local/sbin/icinga2'
+    }
+  }
 }
