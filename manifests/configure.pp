@@ -1,4 +1,9 @@
 class icinga::configure {
+
+  $dbhost   = $::icinga::dbhost
+  $dbname   = $::icinga::dbname
+  $dbuser   = $::icinga::dbuser
+  $dbpasswd = $::icinga::dbpasswd
   
   icinga::feature { $icinga::enabled_features:
     action => 'enable'
@@ -24,10 +29,10 @@ class icinga::configure {
       dbtype     => $icinga::dbtype,
       test_table => 'icinga_hosts',
       schema     => $schema,
-      dbuser     => $icinga::dbuser,
-      dbpasswd   => $icinga::dbpasswd,
-      dbhost     => $icinga::dbhost,
-      dbname     => $icinga::dbname,
+      dbuser     => $dbuser,
+      dbpasswd   => $dbpasswd,
+      dbhost     => $dbhost,
+      dbname     => $dbname,
     }
   }
 }
