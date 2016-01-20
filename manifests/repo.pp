@@ -10,7 +10,7 @@ class icinga::repo {
           gpgkey   => 'http://packages.icinga.org/icinga.key',
         }
       }
-      Ubuntu: {
+      'Ubuntu': {
         exec{'icinga::repo::install':
           command => '/usr/bin/add-apt-repository ppa:formorer/icinga',
           creates => '/etc/apt/sources.list.d/formorer-icinga-trusty.list',
@@ -19,6 +19,9 @@ class icinga::repo {
           command => '/usr/bin/apt-get update',
           creates => '/var/lib/apt/lists/ppa.launchpad.net_formorer_icinga_ubuntu_dists_trusty_Release',
         }
+      }
+      'OpenBSD': {
+        # deliberately empty, packages are available in default repos
       }
       default: { fail("Currently unavailable for ${::osfamily}") }
     }
