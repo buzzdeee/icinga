@@ -11,7 +11,7 @@ define icinga::common::initdb (
   $conn="${dbclient} --user=${dbuser} --password=${dbpasswd} --host=${dbhost} ${dbname}"
   
   exec{"icinga::initdb_${title}":
-    command => "/bin/bash -c '${conn} < ${schema}'",
-    unless  => "/bin/bash -c 'echo \"describe ${test_table}\"|${conn} >/dev/null 2>&1'",
+    command => "/bin/sh -c '${conn} < ${schema}'",
+    unless  => "/bin/sh -c 'echo \"describe ${test_table}\"|${conn} >/dev/null 2>&1'",
   }
 }
