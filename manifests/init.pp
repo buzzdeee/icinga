@@ -43,6 +43,7 @@ class icinga (
   $dbname            = $icinga::params::dbname,
   $enabled_features  = $icinga::params::features,
   $disabled_features = $icinga::params::no_features,
+  $icinga_share_path = $icinga::params::icinga_share_path,
   $with_repo         = $icinga::params::with_repo,
   $initdb            = $icinga::params::initdb,
   $with_backend      = $icinga::params::with_backend,

@@ -22,24 +22,32 @@ class icinga::params {
 
   case $::operatingsystem {
     'RedHat': {
-      $with_repo  = true
-      $icinga_bin = '/usr/sbin/icinga2'
+      $with_repo         = true
+      $icinga_bin        = '/usr/sbin/icinga2'
+      $icinga_share_path = '/usr/share'
     }
     'CentOS': {
-      $with_repo = true
-      $icinga_bin = '/usr/sbin/icinga2'
+      $with_repo         = true
+      $icinga_bin        = '/usr/sbin/icinga2'
+      $icinga_share_path = '/usr/share'
     }
     'ScientificLinux': {
-      $with_repo = true
-      $icinga_bin = '/usr/sbin/icinga2'
+      $with_repo         = true
+      $icinga_bin        = '/usr/sbin/icinga2'
+      $icinga_share_path = '/usr/share'
     }
     'Ubuntu': {
-      $with_repo = true
-      $icinga_bin = '/usr/sbin/icinga2'
+      $with_repo         = true
+      $icinga_bin        = '/usr/sbin/icinga2'
+      $icinga_share_path = '/usr/share'
     }
     'OpenBSD': {
-      $with_repo = false
-      $icinga_bin = '/usr/local/sbin/icinga2'
+      $with_repo         = false
+      $icinga_bin        = '/usr/local/sbin/icinga2'
+      $icinga_share_path = '/usr/local/share'
+    }
+    default: {
+      fail("${::module_name} does not support operatingsystem: ${::operatingsystem}")
     }
   }
 }

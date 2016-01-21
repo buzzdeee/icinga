@@ -1,9 +1,10 @@
 class icinga::configure {
 
-  $dbhost   = $::icinga::dbhost
-  $dbname   = $::icinga::dbname
-  $dbuser   = $::icinga::dbuser
-  $dbpasswd = $::icinga::dbpasswd
+  $dbhost            = $::icinga::dbhost
+  $dbname            = $::icinga::dbname
+  $dbuser            = $::icinga::dbuser
+  $dbpasswd          = $::icinga::dbpasswd
+  $icinga_share_path = $::icinga::icinga_share_path
   
   icinga::feature { $icinga::enabled_features:
     action => 'enable'
@@ -23,7 +24,7 @@ class icinga::configure {
   }
 
   if $icinga::initdb {
-    $schema="/usr/share/icinga2-ido-${::icinga::dbtype}/schema/${icinga::dbtype}.sql"
+    $schema="${icinga_share_path}/icinga2-ido-${::icinga::dbtype}/schema/${icinga::dbtype}.sql"
 
     icinga::common::initdb{'icinga::configure::init-db':
       dbtype     => $icinga::dbtype,
