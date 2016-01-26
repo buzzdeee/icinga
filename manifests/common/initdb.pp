@@ -7,9 +7,10 @@ define icinga::common::initdb (
   $dbhost,
   $dbname,
   ){
-  case $dbtype in {
+  $dbclient=$icinga::params::dbclient[$dbtype]
+
+  case $dbtype {
     'mysql': {
-      $dbclient=$icinga::params::dbclient[$dbtype]
       $conn="${dbclient} --user=${dbuser} --password=${dbpasswd} --host=${dbhost} ${dbname}"
 
       exec{"icinga::initdb_${title}":
@@ -18,16 +19,21 @@ define icinga::common::initdb (
       }
     }
     'pgsql': {
-      postgresql_psql { 'icinga_initdb_${title}':
-        command     => "\i ${schema}",
+      postgresql_psql { "icinga_initdb_${title}":
+        command     => "\\i ${schema}",
         db          => $dbname,
+        port        => '5432',
         psql_user   => $dbuser,
-        environment => "PGPASSWORD=${dbpasswd}",
-        unless      => "\dt ${test_table}",
+        psql_path   => $dbclient,
+        connect_settings => {
+          PGPASSWORD => $dbpasswd,
+          PGHOST     => $dbhost,
+        },
+        unless      => "SELECT dbversion_id FROM ${test_table}",
       }
     }
     default: {
       fail("${::module_name} doesn't support dbtype: ${dbtype}")
     }
-  
+  }  
 }
